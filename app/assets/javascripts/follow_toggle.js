@@ -1,7 +1,7 @@
-$.FollowToggle = function (el) {
+$.FollowToggle = function (el, options) {
   this.$el = $(el);
-  this.followState = this.$el.data('initial-follow-state');
-  this.userId = this.$el.data('user-id');
+  this.followState = this.$el.data('initial-follow-state') || options.followState;
+  this.userId = this.$el.data('user-id') || options.userId;
   this.render();
   this.eventListener();
 };
@@ -38,12 +38,12 @@ $.FollowToggle.prototype.handleClick = function(event) {
 
 $.FollowToggle.prototype.toggleState = function() {
   this.followState = ((this.followState === 'followed') ? 'unfollowed' : 'followed');
-  this.$el.data('initial-follow-state', 'david');
+  this.$el.data('initial-follow-state', this.followState);
 };
 
-$.fn.followToggle = function () {
+$.fn.followToggle = function (options) {
   return this.each(function () {
-    new $.FollowToggle(this);
+    new $.FollowToggle(this, options);
   });
 };
 
