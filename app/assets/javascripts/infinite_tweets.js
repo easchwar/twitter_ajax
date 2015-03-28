@@ -36,11 +36,12 @@ $.InfiniteTweets.prototype.fetchTweets = function(event) {
 };
 
 $.InfiniteTweets.prototype.insertTweets = function(response) {
-  response.forEach(function (tweet) {
-    var $li = $('<li></li>');
-    $li.html(JSON.stringify(tweet));
-    this.$feed.append($li);
-  }.bind(this));
+  var $script = this.$el.find('script');
+  var tweetFunction = _.template($script.text());
+  console.log(response);
+  var $tweets = $(tweetFunction({tweets: response}));
+
+  this.$feed.append($tweets);
 };
 
 $.fn.infiniteTweets = function(options) {
